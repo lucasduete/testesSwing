@@ -8,7 +8,12 @@ import java.awt.event.ActionListener;
 import javax.swing.*;
 
 public class Janela extends JFrame {
-    
+
+    JButton btOk, btLimpar, btFechar;
+    JTextField tfCPF, tfNome, tfEndereco;
+    JComboBox cargo;
+    ButtonGroup grupo;
+
     public Janela(String titulo){
         super(titulo);
         
@@ -84,7 +89,7 @@ public class Janela extends JFrame {
     }
     
     private void addTextFields(Container container) {
-        JTextField tfCPF = new JTextField(14);
+        tfCPF = new JTextField(14);
         tfCPF.setFont(new Font("Arial", Font.BOLD, 14));
         tfCPF.setForeground(Color.red);
         tfCPF.setBackground(new Color(255,255,255));
@@ -92,13 +97,13 @@ public class Janela extends JFrame {
         
         container.add(tfCPF);
         
-        JTextField tfNome = new JTextField(100);
+        tfNome = new JTextField(100);
         tfNome.setBounds(75, 90, 200, 20);
         tfNome.setFont(new Font("Arial", Font.BOLD, 14));
         
         container.add(tfNome);
         
-        JTextField tfEndereco = new JTextField(200);
+        tfEndereco = new JTextField(200);
         tfEndereco.setBounds(95, 150, 200, 20);
         tfEndereco.setFont(new Font("Arial", Font.BOLD, 14));
         
@@ -107,7 +112,7 @@ public class Janela extends JFrame {
     
     private void addRadioButtons(Container container){
         
-        ButtonGroup grupo = new ButtonGroup();
+        grupo = new ButtonGroup();
         
         JRadioButton masculino = new JRadioButton("Masculino");
         masculino.setBounds(80, 120, 100, 20);
@@ -129,7 +134,7 @@ public class Janela extends JFrame {
 
         String tipo[] = {"Assalariado", "Comissionado", "Horista"};
 
-        JComboBox cargo = new JComboBox(tipo);
+        cargo = new JComboBox(tipo);
 
         cargo.setBounds(95, 180, 250, 20);
         container.add(cargo);
@@ -137,16 +142,17 @@ public class Janela extends JFrame {
     }
 
     private void addButtons(Container container) {
-        JButton btOk = new JButton("OK");
+        btOk = new JButton("OK");
         btOk.setBounds(30, 220, 100, 20);
         btOk.addActionListener(new Ouvinte());
         container.add(btOk);
 
-        JButton btLimpar = new JButton("Limpar");
+        btLimpar = new JButton("Limpar");
         btLimpar.setBounds(150, 220, 100, 20);
+        btLimpar.addActionListener(new Ouvinte());
         container.add(btLimpar);
 
-        JButton btFechar = new JButton("Fechar");
+        btFechar = new JButton("Fechar");
         btFechar.setBounds(270, 220, 100, 20);
         btFechar.addActionListener((e) -> {
             System.exit(0);
@@ -158,7 +164,27 @@ public class Janela extends JFrame {
     public class Ouvinte implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            System.out.print("Ok");
+            JButton source = (JButton) e.getSource();
+
+            if(source.equals(btOk)) {
+                StringBuilder builder = new StringBuilder();
+                builder.append("Nome: ");
+                builder.append(tfNome.getText());
+                builder.append("\nCPF: ");
+                builder.append(tfCPF.getText());;
+                builder.append("\nEndereço: ");
+                builder.append(tfEndereco.getText());
+                builder.append("\nCargo: ");
+                builder.append((cargo.getSelectedItem()));
+
+                JOptionPane.showMessageDialog(null, builder.toString());
+            } else if (source.equals(btLimpar)) {
+                tfNome.setText("");
+                tfCPF.setText("");
+                tfEndereco.setText("");
+            } else {
+                System.exit(0);
+            }
         }
     }
     
