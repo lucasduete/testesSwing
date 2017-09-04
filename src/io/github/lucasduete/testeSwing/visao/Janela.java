@@ -1,24 +1,12 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package io.github.lucasduete.testeSwing.visao;
 
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.Font;
-import javax.swing.ButtonGroup;
-import javax.swing.ImageIcon;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JRadioButton;
-import javax.swing.JTextField;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import javax.swing.*;
 
-/**
- *
- * @author IFPB
- */
 public class Janela extends JFrame {
     
     public Janela(String titulo){
@@ -28,7 +16,7 @@ public class Janela extends JFrame {
     }
     
     private void inicializarComponentes(){
-        setSize(400, 400);
+        setSize(400, 300);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         setAlwaysOnTop(true);
@@ -44,7 +32,9 @@ public class Janela extends JFrame {
         addLabels(container);
         addTextFields(container);
         addRadioButtons(container);
-        
+        addComboBox(container);
+        addButtons(container);
+
         setVisible(true);
     }
     
@@ -133,6 +123,43 @@ public class Janela extends JFrame {
         grupo.add(feminino);
         container.add(feminino);
         
+    }
+
+    private void addComboBox(Container container) {
+
+        String tipo[] = {"Assalariado", "Comissionado", "Horista"};
+
+        JComboBox cargo = new JComboBox(tipo);
+
+        cargo.setBounds(95, 180, 250, 20);
+        container.add(cargo);
+
+    }
+
+    private void addButtons(Container container) {
+        JButton btOk = new JButton("OK");
+        btOk.setBounds(30, 220, 100, 20);
+        btOk.addActionListener(new Ouvinte());
+        container.add(btOk);
+
+        JButton btLimpar = new JButton("Limpar");
+        btLimpar.setBounds(150, 220, 100, 20);
+        container.add(btLimpar);
+
+        JButton btFechar = new JButton("Fechar");
+        btFechar.setBounds(270, 220, 100, 20);
+        btFechar.addActionListener((e) -> {
+            System.exit(0);
+        });
+
+        container.add(btFechar);
+    }
+
+    public class Ouvinte implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            System.out.print("Ok");
+        }
     }
     
 }
